@@ -8,7 +8,7 @@ import "./ImageList.css";
 
 export default class ImageList {
   constructor({ $target }) {
-    this.render($target);
+    return this.render($target);
   }
 
   /**
@@ -21,17 +21,36 @@ export default class ImageList {
    */
   string = (iter) => _.reduce((a, b) => `${a}${b}`, iter);
 
+  /**
+   * 썸네일
+   */
+  getThumbnail = L.map(({ ...item }) => ({
+    ...item,
+    thumbnail: `https://picsum.photos/id/${item.id}/300/${Math.floor(
+      item.height * (300 / item.width)
+    )}/`,
+  }));
+
   strMap = _.curry(_.pipe(L.map, this.string));
 
   tmpl = (imgs) => `
-    <section class="photos">
-    ${this.strMap(
-      (img) =>
-        `<img src="${img.download_url}" class="fade" alt="${img.author}" crossorigin="anonymous">`,
-      imgs
-    )}
-    </section>
+    <article class="photos">
+      ${this.strMap(
+        ({ thumbnail, author }) =>
+          `<article class="section">
+              <img src="${thumbnail}" class="fade" crossorigin="anonymous">
+              <p>${author}</p>
+            </article>
+          `,
+        imgs
+      )}
+    </article>
   `;
 
-  render = ($target) => _.go(this.fetch(), this.tmpl, $.el, $.append($target));
+  render = ($target) =>
+    _.go(
+      this.fetch(),
+      this.getThumbnail,
+      _.tap(_.pipe(this.tmpl, $.el, $.append($target)))
+    );
 }
