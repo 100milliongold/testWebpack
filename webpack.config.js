@@ -16,9 +16,7 @@ module.exports = {
         test: /\.js$/,
         include: [path.resolve(__dirname, "src")],
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
+        use: ["babel-loader", "eslint-loader"],
       },
       {
         test: /\.css$/i,
