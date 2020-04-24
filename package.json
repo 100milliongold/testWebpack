@@ -18,6 +18,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.4.0",
@@ -40,6 +41,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
+    "@babel/runtime-corejs3": "^7.9.2",
     "fxdom": "^0.2.1",
     "fxjs": "^0.15.0",
     "fxjs2": "^0.15.0"

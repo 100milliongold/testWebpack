@@ -7,6 +7,11 @@ const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
 
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, "dist/client"),
+    filename: "[name].[hash:8].js",
+    chunkFilename: "[name].[hash:8].js",
+  },
   module: {
     rules: [
       {
@@ -34,8 +39,8 @@ module.exports = {
       filename: "index.html",
     }),
     new miniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
+      filename: "[name].[hash:8].css",
+      chunkFilename: "[id].[hash:8].css",
     }),
     new ErrorOverlayPlugin(), // error page 출력
     new DashboardPlugin(),

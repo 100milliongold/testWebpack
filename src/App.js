@@ -1,8 +1,8 @@
 import "./App.css";
-import ImageList from "./components/ImageList";
+import * as ImageList from "./components/ImageList";
 
 export default class App {
   constructor($target) {
-    new ImageList({ $target });
+    ImageList.render($target);
   }
 }
