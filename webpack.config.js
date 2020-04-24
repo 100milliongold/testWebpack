@@ -2,6 +2,10 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
+// const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const DashboardPlugin = require("webpack-dashboard/plugin");
+
 module.exports = {
   module: {
     rules: [
@@ -26,12 +30,15 @@ module.exports = {
   },
   plugins: [
     new htmlWebpackPlugin({
-      template: "./public/index.html",
+      template: path.resolve(__dirname, "public/index.html"),
       filename: "index.html",
     }),
     new miniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
+    new ErrorOverlayPlugin(), // error page 출력
+    new DashboardPlugin(),
   ],
+  devtool: "cheap-module-source-map", // 'eval' is not supported by error-overlay-webpack-plugin
 };

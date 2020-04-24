@@ -2,7 +2,8 @@ import * as L from "fxjs2/Lazy/index.js";
 import * as _ from "fxjs2/Strict/index.js";
 
 import { getImages } from "../../utils/apis";
-import * as $ from "../../utils/modules/Render";
+
+import $ from "fxdom";
 
 import "./ImageList.css";
 
@@ -26,31 +27,25 @@ export default class ImageList {
    */
   getThumbnail = L.map(({ ...item }) => ({
     ...item,
-    thumbnail: `https://picsum.photos/id/${item.id}/300/${Math.floor(
-      item.height * (300 / item.width)
-    )}/`,
+    thumbnail: `https://picsum.photos/id/${item.id}/300/300/`,
   }));
 
-  strMap = _.curry(_.pipe(L.map, this.string));
-
   tmpl = (imgs) => `
-    <article class="photos">
-      ${this.strMap(
+    <div class="images">
+      ${_.strMap(
         ({ thumbnail, author }) =>
-          `<article class="section">
-              <img src="${thumbnail}" class="fade" crossorigin="anonymous">
-              <p>${author}</p>
-            </article>
+          `
+          <div class="image">
+            <div class="box"><img src="${thumbnail}" class="fade" alt="" crossorigin="anonymous"></div>
+            <div class="name">${author}</div>
+            <div class="remove">x</div>
+          </div>
           `,
         imgs
       )}
-    </article>
+    </div>
   `;
 
   render = ($target) =>
-    _.go(
-      this.fetch(),
-      this.getThumbnail,
-      _.tap(_.pipe(this.tmpl, $.el, $.append($target)))
-    );
+    _.go(this.fetch(), this.getThumbnail, this.tmpl, $.el, $.appendTo($target));
 }

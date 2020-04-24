@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --progress --inline --mode development"
+    "start": "webpack-dashboard -- webpack-dev-server --open --progress --inline --mode development"
   },
   "repository": {
     "type": "git",
@@ -20,21 +20,34 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.4.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.2",
+    "error-overlay-webpack-plugin": "^0.4.1",
     "eslint": "^6.8.0",
     "eslint-loader": "^4.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
+    "jest": "^25.4.0",
+    "jest-fetch-mock": "^3.0.3",
     "mini-css-extract-plugin": "^0.9.0",
     "style-loader": "^1.1.4",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
+    "webpack-dashboard": "^3.2.0",
     "webpack-dev-server": "^3.10.3",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "fxdom": "^0.2.1",
     "fxjs": "^0.15.0",
     "fxjs2": "^0.15.0"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   }
 }
