@@ -11,7 +11,7 @@ import "./ImageList.css";
 /**
  * 데이터 가져오기
  */
-const fetch = () => getImages();
+const fetch = () => getImages({ limit: 100 });
 
 /**
  * 썸네일
@@ -24,19 +24,22 @@ const getThumbnail = L.map(({ ...item }) => ({
 
 const tmpl = (imgs) => `
     <div class="images">
-      ${_.strMap(
-        ({ thumbnail, author }) =>
-          `
+      ${gridImageList(imgs)}
+    </div>
+  `;
+
+const gridImageList = (imgs) =>
+  _.strMap(
+    ({ thumbnail, author }) =>
+      `
           <div class="image">
             <div class="box"><img src="" lazy-src="${thumbnail}" class="fade" alt="" crossorigin="anonymous"></div>
             <div class="name">${author}</div>
             <div class="remove">x</div>
           </div>
           `,
-        imgs
-      )}
-    </div>
-  `;
+    imgs
+  );
 
 const loader = (limit) =>
   _.tap(
@@ -74,5 +77,14 @@ export const render = ($target) =>
     $.el,
     $.append($target),
     Ui.remover(".remove", ".image"),
+    // _.tap(
+    //   (e) => $.qs(".images"),
+    //   $.on(
+    //     "scroll",
+    //     ({ target: { scrollHeight, scrollTop, offsetHeight } }) =>
+    //       scrollHeight - offsetHeight <= scrollTop && render($target)
+    //   ),
+    //   console.log
+    // ),
     loader(10)
   );

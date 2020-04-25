@@ -7,4 +7,5 @@ export const cancelApiData = () => {
   cancel();
 };
 
-export const getImages = () => getApiData("https://picsum.photos/v2/list");
+export const getImages = ({ page = 1, limit = 30 }) =>
+  getApiData(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`);
